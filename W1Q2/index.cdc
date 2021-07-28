@@ -1,3 +1,4 @@
+
 pub struct Canvas {
   pub let width: UInt8;
   pub let height: UInt8;
@@ -20,9 +21,6 @@ pub resource Picture {
 
 pub resource Printer {
   pub var history: [String]
-  init() {
-    self.history = [];
-  }
 
   pub fun print(canvas: Canvas): @Picture? {
     if(self.history.contains(canvas.pixels)) {
@@ -31,9 +29,12 @@ pub resource Printer {
     } else {
       self.history.append(canvas.pixels)
       display(canvas: canvas)
-      let picture <- create Picture(canvas: canvas)
-      return <- picture
+      return <- create Picture(canvas: canvas)
     }
+  }
+
+  init() {
+    self.history = [];
   }
 
 }
@@ -75,8 +76,6 @@ pub fun display(canvas: Canvas){
   }
   log(topAndBottomFrame)
 }
-
-
 pub fun main() {
   let pixelsX = [
     "*   *",
@@ -84,19 +83,17 @@ pub fun main() {
     "  *  ",
     " * * ",
     "*   *"
-  ]
+  ];
 
-  let canvasX = Canvas(width: 5, height: 5, pixels: serializeStringArray(pixelsX))
+  let canvasX = Canvas(width: 5, height: 5, pixels: serializeStringArray(pixelsX));
 
-  let printer <- create Printer()
+  let printer <- create Printer();
 
   // print once
-  printer.print(canvas: canvasX)
+  printer.print(canvas: canvasX);
 
   // print again
-  printer.print(canvas: canvasX)
+  // printer.print(canvas: canvasX);
 
-  destroy printer
-
-
+  destroy printer;
 }
