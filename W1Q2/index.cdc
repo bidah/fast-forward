@@ -25,11 +25,11 @@ pub resource Printer {
   }
 
   pub fun print(canvas: Canvas): @Picture? {
-    if(printHistory.contains(canvas.pixels)) {
+    if(self.history.contains(canvas.pixels)) {
       log("Picture already printed once")
       return nil
     } else {
-      printHistory.append(canvas.pixels)
+      self.history.append(canvas.pixels)
 
       display(canvas: canvas)
 
