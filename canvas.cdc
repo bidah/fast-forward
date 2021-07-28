@@ -33,7 +33,6 @@ pub fun unserializeArrayString(line: String, width: UInt8): [String] {
   var from = 0;
   var to = _width;
 
-  log(line.length)
   while count < _width {
     let row = line.slice(from: from , upTo: to);
     display.append(row);
@@ -44,33 +43,18 @@ pub fun unserializeArrayString(line: String, width: UInt8): [String] {
   return display;
 }
 
-// pub fun printPixels(pixels: [String]){
-//   for line in pixels {
-//     log(line)
-//   }
-// }
+pub fun display(canvas: Canvas){
+  let topAndBottomFrame = "+-----+"
+  let sideFrame = "|"
 
-// pub fun display(pixels: [String]){
-//   let topAndBottomFrame = "+-----+"
-//   let sideFrame = "|"
+  let pixelsArray = unserializeArrayString(line: canvas.pixels, width: canvas.width )
 
-//   log(topAndBottomFrame)
-//   for line in pixels {
-//     log(sideFrame.concat(line).concat(sideFrame))
-//   }
-//   log(topAndBottomFrame)
-// }
-
-// pub fun display(canvas: Canvas){
-//   let topAndBottomFrame = "+-----+"
-//   let sideFrame = "|"
-
-//   log(topAndBottomFrame)
-//   for line in canvas.pixels {
-//     log(sideFrame.concat(line).concat(sideFrame))
-//   }
-//   log(topAndBottomFrame)
-// }
+  log(topAndBottomFrame)
+  for line in pixelsArray {
+    log(sideFrame.concat(line).concat(sideFrame))
+  }
+  log(topAndBottomFrame)
+}
 
 
 pub fun main() {
@@ -83,10 +67,8 @@ pub fun main() {
   ]
 
   let canvasX = Canvas(width: 5, height: 5, pixels: serializeStringArray(pixelsX))
-  // let letterX <- create Picture(canvas: canvasX)
+  let letterX <- create Picture(canvas: canvasX)
 
-  // log(letterX.canvas)
-  // display(canvas: canvasX)
-  unserializeArrayString(line: canvasX.pixels, width: canvasX.width )
-  // destroy letterX
+  display(canvas: canvasX)
+  destroy letterX
 }
