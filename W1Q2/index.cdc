@@ -32,7 +32,7 @@ pub resource Printer {
       self.history.append(canvas.pixels)
       display(canvas: canvas)
       let picture <- create Picture(canvas: canvas)
-      return picture
+      return <- picture
     }
   }
 
@@ -88,7 +88,7 @@ pub fun main() {
 
   let canvasX = Canvas(width: 5, height: 5, pixels: serializeStringArray(pixelsX))
 
-  let printer = create Printer()
+  let printer <- create Printer()
 
   // print once
   printer.print(canvas: canvasX)
