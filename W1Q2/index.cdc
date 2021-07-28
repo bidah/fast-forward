@@ -19,7 +19,7 @@ pub resource Picture {
 }
 
 pub resource Printer {
-  let printHistory: {String: Picture} = {};
+  let printHistory: @{String: Picture} = {};
   pub fun print(canvas: Canvas): @Picture? {
     if(printHistory.containsKey(canvas.pixels)) {
       log('Picture already printed once')
