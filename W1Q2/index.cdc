@@ -19,7 +19,7 @@ pub resource Picture {
 }
 
 pub resource Printer {
-
+  pub var history: [String]
   init() {
     self.history = [];
   }
@@ -30,9 +30,7 @@ pub resource Printer {
       return nil
     } else {
       self.history.append(canvas.pixels)
-
       display(canvas: canvas)
-
       let picture <- create Picture(canvas: canvas)
       return picture
     }
