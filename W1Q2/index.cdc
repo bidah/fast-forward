@@ -85,7 +85,7 @@ pub fun main() {
 
   printer.print(canvas: canvasX)
 
-  destroy Printer
+  destroy printer
 
 
 }
