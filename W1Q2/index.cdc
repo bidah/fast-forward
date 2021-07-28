@@ -20,8 +20,10 @@ pub resource Picture {
 }
 
 pub resource Printer {
-  pub var history: [String]
-
+  pub let history: [String]
+  init() {
+    self.history = [];
+  }
   pub fun print(canvas: Canvas): @Picture? {
     if(self.history.contains(canvas.pixels)) {
       log("Picture already printed once")
@@ -32,11 +34,6 @@ pub resource Printer {
       return <- create Picture(canvas: canvas)
     }
   }
-
-  init() {
-    self.history = [];
-  }
-
 }
 
 pub fun serializeStringArray(_ lines: [String]): String {
@@ -90,10 +87,12 @@ pub fun main() {
   let printer <- create Printer();
 
   // print once
-  printer.print(canvas: canvasX);
+  let picture1 <- printer.print(canvas: canvasX);
 
   // print again
-  // printer.print(canvas: canvasX);
+  let picture2 <- printer.print(canvas: canvasX);
 
   destroy printer;
+  destroy picture1;
+  destroy picture2;
 }
