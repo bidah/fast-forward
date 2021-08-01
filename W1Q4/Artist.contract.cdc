@@ -7,6 +7,17 @@ pub contract Artist {
       self.store <- []
     }
 
+    pub fun getCanvasList(): [Artist.Canvas] {
+      var canvasList: [Artist.Canvas] = [];
+
+      var index = 0;
+      while index < self.store.length {
+        canvasList.append(self.store[index].canvas)
+        index = index + 1
+      }
+      return canvasList
+    }
+
     pub fun deposit(picture: @Picture) {
       self.store.append(<- picture)
     }
