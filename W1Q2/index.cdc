@@ -73,6 +73,7 @@ pub fun display(canvas: Canvas){
   }
   log(topAndBottomFrame)
 }
+
 pub fun main() {
   let pixelsX = [
     "*   *",
