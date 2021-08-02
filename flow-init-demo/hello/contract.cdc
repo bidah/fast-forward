@@ -4,7 +4,7 @@ pub contract Hello {
   pub fun sayHi(to name: String): String {
     let greeting = "Hi, ".concat(name)
 
-    emit IssuedGreeting(greeting: greeting)
+    // emit IssuedGreeting(greeting: greeting)
 
     return greeting
   }
