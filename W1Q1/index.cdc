@@ -62,3 +62,5 @@ pub fun main() {
 
   display(canvas: canvasX)
 }
+
+    "*   * * * *  * * *   *"

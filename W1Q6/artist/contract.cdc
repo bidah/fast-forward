@@ -119,14 +119,14 @@ pub contract Artist {
     pub fun print(canvas: Canvas): @Picture? {
       // Canvas needs to fit Printer's dimensions.
       if canvas.pixels.length != Int(self.width * self.height) {
-        emit PicturePrintLog("Canvas needs to fit Printer's dimensions.")
+        emit PicturePrintLog(message: "Canvas needs to fit Printer's dimensions.")
         return nil
       }
 
       // Canvas can only use visible ASCII characters.
       for symbol in canvas.pixels.utf8 {
         if symbol < 32 || symbol > 126 {
-          emit PicturePrintLog("Canvas can only use visible ASCII characters")
+          emit PicturePrintLog(message: "Canvas can only use visible ASCII characters")
           return nil
         }
       }
@@ -137,10 +137,10 @@ pub contract Artist {
         self.prints[canvas.pixels] = canvas
 
         self.display(canvas: picture.canvas)
-        emit PicturePrintSuccess(canvas: picture.canvas)
+        emit PicturePrintSuccess(pixels: canvas.pixels)
         return <- picture
       } else {
-        emit PicturePrintFailure(canvas: picture.canvas)
+        emit PicturePrintFailure(pixels: canvas.pixels)
         return nil
       }
     }
