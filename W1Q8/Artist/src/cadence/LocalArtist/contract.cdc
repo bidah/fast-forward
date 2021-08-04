@@ -108,7 +108,7 @@ pub contract LocalArtist {
 
       // Printer is only allowed to print unique canvases.
       if self.prints.containsKey(pixels) == false {
-        let canvas = Canvas
+        let canvas = Canvas(
           width: width,
           height: height,
           pixels: pixels

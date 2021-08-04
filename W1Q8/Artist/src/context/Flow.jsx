@@ -164,10 +164,10 @@ function Provider(props) {
 
     console.log({ loggedIn });
     // TODO: Once implemented, remove the "setUser" call.
-    // setUser({
-    //   loggedIn: true,
-    //   addr: "0xLocalArtist",
-    // });
+    setUser({
+      loggedIn: true,
+      addr: loggedIn.addr,
+    });
   };
   const logOut = () => {
     // TODO: Implement FCL log out.
