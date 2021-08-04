@@ -158,18 +158,22 @@ function Provider(props) {
   const setUser = (user) => {
     dispatch({ type: "setUser", payload: user });
   };
+
   const logIn = async () => {
     // TODO: Implement FCL log in.
-    const loggedIn = await fcl.logIn();
+    const user = await fcl.logIn();
 
-    console.log({ loggedIn });
+    console.log({ user });
     // TODO: Once implemented, remove the "setUser" call.
-    setUser({
-      loggedIn: true,
-      addr: loggedIn.addr,
-    });
+    // setUser({
+    //   loggedIn: true,
+    //   addr: loggedIn.addr,
+    // });
+
+    setUser(user);
   };
   const logOut = () => {
+    fcl.unauthenticate();
     setUser({ loggedIn: null });
   };
 
