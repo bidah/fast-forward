@@ -170,7 +170,7 @@ function Provider(props) {
     });
   };
   const logOut = () => {
-    // TODO: Implement FCL log out.
+    setUser({ loggedIn: null });
   };
 
   useEffect(() => {
