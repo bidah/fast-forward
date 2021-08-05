@@ -210,16 +210,42 @@ function Provider(props) {
       .send([
         fcl.transaction`
         import LocalArtist from ${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT}
-          transaction(address: Address) {
-            prepare {
-              let printerRef = getAccount(0x18825f6ad7f587af)
-                .getCapability<&LocalArtist.Printer>(/public/LocalArtistPicturePrinter)
-                .borrow()
-                ?? panic("Couldn't borrow printer reference.")
+
+        transaction(width: Int, height: Int, pixels: String) {
+          
+          let picture: @LocalArtist.Picture?
+          let collectionRef: &{LocalArtist.PictureReceiver}
+
+          prepare(account: AuthAccount) {
+            let printerRef = getAccount(${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT})
+              .getCapability<&LocalArtist.Printer>(/public/LocalArtistPicturePrinter)
+              .borrow()
+              ?? panic("Couldn't borrow printer reference.")
+              
+            self.picture <- printerRef.print(
+              width: width,
+              height: height,
+              pixels: pixels
+            )
+            self.collectionRef = account
+              .getCapability<&{LocalArtist.PictureReceiver}>(/public/LocalArtistPictureReceiver)
+              .borrow()
+              ?? panic("Couldn't borrow picture receiver reference.")
+          }
+          execute {
+            if self.picture == nil {
+              destroy self.picture
+            } else {
+              self.collectionRef.deposit(picture: <- self.picture!)
             }
           }
+        }
         `,
-        fcl.args([fcl.arg(state.user.addr, FlowTypes.Address)]),
+        fcl.args([
+          fcl.arg(picture.width, FlowTypes.Int),
+          fcl.arg(picture.height, FlowTypes.Int),
+          fcl.arg(picture.pixels, FlowTypes.String),
+        ]),
         fcl.payer(fcl.authz),
         fcl.proposer(fcl.authz),
         fcl.authorizations([fcl.authz]),
