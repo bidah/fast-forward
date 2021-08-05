@@ -155,29 +155,29 @@ function Provider(props) {
           // the "args" in place for the script's arguments.
           // Use the "fetchBalance" as an example.
 
-          const getCollections = await fcl
+          const collection = await fcl
             .send([
               fcl.script`
-              import LocalArtist from 0x18825f6ad7f587af
+              import LocalArtist from ${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT}
 
-              pub fun Main(address: Address) {
+              pub fun Main(address: Address): [LocalArtist.Canvas] {
                 let account = getAccount(address)
 
-                let collectionRef = account
-                .getCapability<&{LocalArtist.PictureReceiver}>(/public/LocalArtistPictureReceiver)
-                .borrow()
+                let pictureReceiverRef = account
+                  .getCapability<&{LocalArtist.PictureReceiver}>(/public/LocalArtistPictureReceiver)
+                  .borrow()
+                  ?? panic("couldn't borrow picture receiver reference")
 
-                return collectionRef.getCanvases()
+                  return pictureReceiverRef.getCanvases()
               }
             `,
-              fcl.args([fcl.arg(state.user.addr, FlowTypes.Address)]),
+              args,
             ])
             .then(fcl.decode)
             .catch(console.error);
 
-          console.log({ getCollections });
+          console.log({ collection });
 
-          const collection = getCollections;
           const mappedCollection = collection.map(
             (serialized) =>
               new Picture(
