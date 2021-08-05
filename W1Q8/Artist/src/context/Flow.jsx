@@ -262,24 +262,14 @@ function Provider(props) {
   };
 
   const logIn = async () => {
-    const user = await fcl.logIn();
-    setUser(user);
+    fcl.logIn();
   };
   const logOut = () => {
     fcl.unauthenticate();
-    setUser({ loggedIn: null });
   };
 
-  // useEffect(() => {
-  //   destroyCollection();
-  // }, [destroyCollection]);
-
   useEffect(() => {
-    // TODO: Implement FCL subscription to get current user.
-    // TODO: Once implemented, remove the "setUser" call.
-    setUser({
-      loggedIn: null,
-    });
+    fcl.currentUser().subscribe(setUser);
   }, []);
 
   useEffect(() => {
