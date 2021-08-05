@@ -82,7 +82,7 @@ function Provider(props) {
     const transactionId = await fcl
       .send([
         fcl.transaction`
-          import LocalArtist from 0x18825f6ad7f587af
+          import LocalArtist from ${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT}
 
           transaction {
             prepare(account: AuthAccount){
@@ -114,7 +114,7 @@ function Provider(props) {
     const transactionId = await fcl
       .send([
         fcl.transaction`
-        import LocalArtist from 0x18825f6ad7f587af
+        import LocalArtist from ${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT}
 
         transaction {
           prepare(account: AuthAccount) {
@@ -160,7 +160,7 @@ function Provider(props) {
               fcl.script`
               import LocalArtist from ${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT}
 
-              pub fun Main(address: Address): [LocalArtist.Canvas] {
+              pub fun main(address: Address): [LocalArtist.Canvas] {
                 let account = getAccount(address)
 
                 let pictureReceiverRef = account
@@ -209,7 +209,7 @@ function Provider(props) {
     const transactionId = await fcl
       .send([
         fcl.transaction`
-        import LocalArtist from 0x18825f6ad7f587af
+        import LocalArtist from ${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT}
           transaction(address: Address) {
             prepare {
               let printerRef = getAccount(0x18825f6ad7f587af)
