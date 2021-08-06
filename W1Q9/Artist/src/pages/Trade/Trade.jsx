@@ -66,7 +66,7 @@ function Trade(props) {
     console.log(listingIndex);
     dispatch({ type: "startProcessing", payload: listingIndex });
     // TODO: Once your buy() method is implemented in Flow.jsx, uncomment this line.
-    // await flow.buy(listingIndex);
+    await flow.buy(listingIndex);
     await flow.fetchCollection();
     const listings = await flow.fetchListings();
     await flow.fetchBalance();
