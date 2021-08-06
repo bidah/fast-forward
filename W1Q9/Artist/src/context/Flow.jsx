@@ -97,7 +97,7 @@ function Provider(props) {
                 <- LocalArtist.createCollection(),
                 to: /storage/LocalArtistPictureCollection
               )
-(
+              account.link<&{LocalArtist.PictureReceiver}>(
                 /public/LocalArtistPictureReceiver,
                 target: /storage/LocalArtistPictureCollection
               )
@@ -356,6 +356,22 @@ function Provider(props) {
 
           // TODO: Complete this transaction by calling LocalArtistMarket.buy().
           transaction(listingIndex: Int) {
+            prepare(account: AuthAccount) {
+              let baseAccount = getAccount(${process.env.REACT_APP_ARTIST_CONTRACT_HOST_ACCOUNT})
+
+              let marketRef = baseAccount.getCapability<&{LocalArtistMarket.MarketInterface}>(/public/LocalArtistMarket).borrow() ?? panic("Couldn't borrow market capacity")
+
+              let listingPrice =  marketRef.getListings()[${listingIndex}].price
+
+              let tokenVaultRef = account.borrow<&FungibleToken.Vault>(from: /storage/flowTokenVault)!
+
+              marketRef
+              .buy(
+                listing: listingIndex,
+                with: <- tokenVaultRef.withdraw(amount: listingPrice), 
+                buyer: account.address
+              )
+            }
           }
         `,
         fcl.args([fcl.arg(listingIndex, FlowTypes.Int)]),
